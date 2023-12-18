@@ -20,19 +20,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install Python 2
-      run: brew install python@2
-
-    - name: Set Python 2 environment
-      run: echo "alias python=python2" >> $GITHUB_ENV
-
     - name: Use Xcode 11.7 to use SDK 11
       run: sudo xcode-select -switch "/Applications/Xcode_11.7.app"
+
+    - name: Install Python 2
+      run: |
+        curl -O https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg
+        sudo installer -pkg python-2.7.18-macosx10.9.pkg -target /
 
     - name: Run build script with Python 2
       run: |
         cd $GITHUB_WORKSPACE
-        python --version
+        python2.7 --version
         sh ./ios_simulator.sh ${{ env.VERSION }}
 
     - uses: actions/upload-artifact@v2
