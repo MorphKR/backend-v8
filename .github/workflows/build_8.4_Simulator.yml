@@ -18,17 +18,27 @@ jobs:
     name: iOS simulator
     runs-on: macos-11.0
     steps:
-      - uses: actions/checkout@v2
-      - name: Use SDK 11.0
-        run: sudo xcode-select -switch "/Applications/Xcode_11.7.app"
-      - name: Run build script
-        run: |
-          cd $GITHUB_WORKSPACE
-          sh ./ios_simulator.sh ${{env.VERSION}}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: v8_bin
-          path: ~/v8/v8/output/**/*
+    - uses: actions/checkout@v2
+
+    - name: Install Python 2
+      run: brew install python@2
+
+    - name: Set Python 2 environment
+      run: echo "alias python=python2" >> $GITHUB_ENV
+
+    - name: Use Xcode 11.7 to use SDK 11
+      run: sudo xcode-select -switch "/Applications/Xcode_11.7.app"
+
+    - name: Run build script with Python 2
+      run: |
+        cd $GITHUB_WORKSPACE
+        python --version
+        sh ./ios_simulator.sh ${{ env.VERSION }}
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: v8_bin
+        path: ~/v8/v8/output/**/*
         
   publish:
     runs-on: ubuntu-latest
