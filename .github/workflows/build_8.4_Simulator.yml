@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use SDK 11.0
-        run: sudo xcode-select -switch "/Applications/Xcode.app/Contents/Developer"
+        run: sudo xcode-select -switch "/Applications/Xcode_11.7.app"
       - name: Run build script
         run: |
           cd $GITHUB_WORKSPACE
