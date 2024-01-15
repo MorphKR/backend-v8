@@ -9,7 +9,7 @@ git reset --hard 8d16d4a
 cd ..
 export DEPOT_TOOLS_UPDATE=0
 export PATH=$(pwd)/depot_tools:$PATH
-gclient
+gclient sync
 
 
 mkdir v8
